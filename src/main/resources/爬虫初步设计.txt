@@ -1,0 +1,118 @@
+
+#
+# 整体设计
+#
+		
+#打开网址 : 
+	open:
+		url: string
+		requestType: string
+		params: string
+		cookies: string 
+		
+		engine: string [static/ajax]
+		static:
+			charset: string
+			connectTimeout: long
+			requestTimeout: long
+			socketTimeout: long
+		ajax:
+			scriptTimeout: long
+			loadTimeout: long
+			implicitlyWait: long
+		
+#点击链接: 
+	click:
+		requestType: string
+		params: string
+		cookies: string
+		
+		pattern: string [linkDom/linkUrl]
+		linkDom:
+			pattern: string [xpath/regex]
+			selector: string
+		linkUrl:
+			url: string
+			placeholder: string
+			replace: 
+				pattern: string [jdbc/text/file]
+				jdbc:
+					driver: string
+					url: string
+					user: string
+					password: string
+					sql: string
+				text: list
+				file: string
+				
+#循环翻页: 
+	pagination:
+		requestType: string
+		params: string
+		cookies: string
+		maxPage: int
+		
+		pattern: string [rulePagination/nextPagination]
+		rulePagination:
+			paginationRule: string
+			paginationUrl: string
+			placeholder: string
+		nextPagination:
+			pattern: string [xpath/regex]
+			selector: string
+		
+#创建列表: 
+	createList:
+		pattern: string [xpath/regex]
+		selector: string
+			
+# 排重: 
+	dedup:
+		fields: list  [url...]
+		strategy: string [md5...]
+		
+		pattern: string [memory/jdbc/mongodb]
+		memory:
+			collectionName: string
+		jdbc:
+			driver: string
+			url: string
+			user: string
+			password: string
+			sql: string
+		mongodb:
+			url: string
+			port: int
+			user: string
+			password: string
+		
+# 提取数据: 定义目标字段，通过xpath/regex提取一个或一组值
+	extractData:
+		field: string
+		pattern: string [xpath/regex]
+		selector: string
+		valueFrom: string [innerHTML, innerTEXT, attribute]
+		formatter: string
+	
+#数据存储: 
+	storeData:
+		engine: string
+		mongodb:
+			url: string
+			port: int
+			user: string
+			password: string
+			database: string
+			collection: string
+		elasticsearch:
+			clusterName: string
+			url: string
+			port: int
+			index: string
+			type: string
+		jdbc:
+			driver: string
+			url: string
+			user: string
+			password: string
+			sql: string
