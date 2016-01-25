@@ -19,6 +19,7 @@ public class ConstResource {
             props.load(in);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             if (null != in) {
                 try {
